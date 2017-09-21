@@ -4,13 +4,13 @@ import org.spree.core.external.ExternalEventSource;
 
 import java.util.Collection;
 
-public class VkEvents implements ExternalEventSource<VkEvent>{
+public class VkEvents implements ExternalEventSource<VkStoredEvent>{
 
     private VkApiCLient apiClient;
 
 
     @Override
-    public Collection<VkEvent> getNew() {
+    public Collection<VkStoredEvent> getNew() {
         return null;
     }
 }

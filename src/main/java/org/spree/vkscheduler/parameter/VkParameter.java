@@ -1,27 +1,25 @@
 package org.spree.vkscheduler.parameter;
 
 import org.spree.core.parameter.Parameter;
-import org.spree.core.parameter.ParameterStorage;
+import org.spree.core.parameter.ConfigStorage;
 
 public class VkParameter implements Parameter<String>{
 
     private final VkParameterName name;
-    private final ParameterStorage storage;
+    private final ConfigStorage storage;
 
-    private String value;
-
-    public VkParameter(VkParameterName name, ParameterStorage storage) {
+    public VkParameter(VkParameterName name, ConfigStorage storage) {
         this.name = name;
         this.storage = storage;
     }
 
     @Override
-    public String getValue() {
-        return storage.getValue(name.name());
+    public String value() {
+        return storage.getString(name.name());
     }
 
     @Override
     public void setValue(String value) {
-        storage.updateValue(name.name(), value);
+        storage.save(name.name(), value);
     }
 }
