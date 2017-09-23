@@ -4,5 +4,7 @@ import com.vk.api.sdk.client.actors.Actor;
 
 public interface VkAuthentication<T extends Actor> {
 
-    T getActor();
+    T actor();
+
+    void init(String code);
 }

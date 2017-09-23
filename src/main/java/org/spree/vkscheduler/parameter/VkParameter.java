@@ -15,11 +15,11 @@ public class VkParameter implements Parameter<String>{
 
     @Override
     public String value() {
-        return storage.getString(name.name());
+        return storage.getString(name);
     }
 
     @Override
     public void setValue(String value) {
-        storage.save(name.name(), value);
+        storage.save(name, value);
     }
 }

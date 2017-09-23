@@ -1,9 +1,12 @@
 package org.spree.vkscheduler.parameter;
 
-public enum VkParameterName {
+import org.spree.core.parameter.ParameterName;
 
-    CODE,
+public enum VkParameterName implements ParameterName {
+
+    USER_ID,
     TOKEN,
     SECRET_KEY,
-    CLIENT_ID
+    CLIENT_ID,
+    REDIRECT_URI
 }
