@@ -23,7 +23,7 @@
         <java.version>1.8</java.version>
         <hibernate.version>5.0.2.Final</hibernate.version>
 
-        <tomcat.url>http://82.146.63.253/manager/text</tomcat.url>
+        <tomcat.url>http://82.146.63.253:8081/manager/text</tomcat.url>
         <tomcat.servername>tomcat7</tomcat.servername>
         <tomcat.username>deployer</tomcat.username>
         <tomcat.password>deployer</tomcat.password>
