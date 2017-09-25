@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface VkProcedure {
     
-    JsonElement execute();
+    JsonElement execute(String text);
 }

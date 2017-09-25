@@ -11,23 +11,19 @@ import org.spree.vkscheduler.exception.VkProcedureException;
 public class GetGroupsProcedure implements VkProcedure {
 
     public static final String STORAGE_FUNCTION_NAME = "getGroups";
-    private final String text;
-    private final String cityId;
+
     private final VkApiClient client;
     private final UserActor actor;
 
-    public GetGroupsProcedure(String text, String cityId, VkApiClient client, UserActor actor) {
-        this.text = text;
-        this.cityId = cityId;
+    public GetGroupsProcedure(VkApiClient client, UserActor actor) {
         this.client = client;
         this.actor = actor;
     }
 
     @Override
-    public JsonElement execute() {
+    public JsonElement execute(String text) {
         ExecuteStorageFunctionQuery query = client.execute().storageFunction(actor, STORAGE_FUNCTION_NAME);
-        query.unsafeParam("text", text);
-        query.unsafeParam("cityId", cityId);
+        query.unsafeParam("text", text);;
         try {
             return query.execute();
         } catch (ApiException | ClientException e) {

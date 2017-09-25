@@ -25,7 +25,7 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
     @Override
     public UserActor actor() {
         if (actor == null) {
-            throw new VkAuthenticationException("vk actor is null now. should init authentication");
+            setupByToken();
         }
         return actor;
     }
@@ -41,7 +41,13 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
             actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
             configs.save(TOKEN, authResponse.getAccessToken());
             configs.save(USER_ID, authResponse.getUserId());
+        } else {
+            setupByToken();
         }
+    }
+
+    private void setupByToken() {
+        actor = new UserActor(configs.getInt(USER_ID), configs.getString(TOKEN));
     }
 
     private UserAuthResponse getUserAuthResponse(String code) {
