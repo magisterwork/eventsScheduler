@@ -52,16 +52,9 @@ public class VkBeanContext {
     }
 
     @Bean
-    @Scope("prototype")
-    @Qualifier("userActor")
-    public UserActor userActor() {
-        return vkAuthentication().actor();
-    }
-
-    @Bean
     @Qualifier("groupProcedure")
     public VkProcedure groupProcedure() {
-        return new GetGroupsProcedure(vkApiClient(), userActor());
+        return new GetGroupsProcedure(vkApiClient(), vkAuthentication());
     }
 
     @Bean

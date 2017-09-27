@@ -2,10 +2,10 @@ package org.spree.vkscheduler.procedure;
 
 import com.google.gson.JsonElement;
 import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.queries.execute.ExecuteStorageFunctionQuery;
+import org.spree.vkscheduler.authentication.VkUserActorAuthentication;
 import org.spree.vkscheduler.exception.VkProcedureException;
 
 public class GetGroupsProcedure implements VkProcedure {
@@ -13,16 +13,16 @@ public class GetGroupsProcedure implements VkProcedure {
     public static final String STORAGE_FUNCTION_NAME = "getGroups";
 
     private final VkApiClient client;
-    private final UserActor actor;
+    private final VkUserActorAuthentication authentication;
 
-    public GetGroupsProcedure(VkApiClient client, UserActor actor) {
+    public GetGroupsProcedure(VkApiClient client, VkUserActorAuthentication authentication) {
         this.client = client;
-        this.actor = actor;
+        this.authentication = authentication;
     }
 
     @Override
     public JsonElement execute(String text) {
-        ExecuteStorageFunctionQuery query = client.execute().storageFunction(actor, STORAGE_FUNCTION_NAME);
+        ExecuteStorageFunctionQuery query = client.execute().storageFunction(authentication.actor(), STORAGE_FUNCTION_NAME);
         query.unsafeParam("text", text);;
         try {
             return query.execute();
