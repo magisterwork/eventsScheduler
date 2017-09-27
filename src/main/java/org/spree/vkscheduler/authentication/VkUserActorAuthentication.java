@@ -8,9 +8,13 @@ import com.vk.api.sdk.objects.UserAuthResponse;
 import org.spree.core.parameter.ConfigStorage;
 import org.spree.vkscheduler.exception.VkAuthenticationException;
 
+import java.util.logging.Logger;
+
 import static org.spree.vkscheduler.parameter.VkParameterName.*;
 
 public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
+
+    private final static Logger LOG = Logger.getLogger(VkUserActorAuthentication.class.getCanonicalName());
 
     private final ConfigStorage configs;
     private final VkApiClient vkClient;
@@ -32,16 +36,19 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
 
     @Override
     public void init(String code) {
+        LOG.info("user initializing with code " + code);
         setupActor(code);
     }
 
     private void setupActor(String code) {
         if (configs.getString(TOKEN) == null || configs.getInt(USER_ID) == null) {
             UserAuthResponse authResponse = getUserAuthResponse(code);
+            LOG.info("got authResponse: " + authResponse);
             actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
             configs.save(TOKEN, authResponse.getAccessToken());
             configs.save(USER_ID, authResponse.getUserId());
         } else {
+            LOG.info("token exist. create user by token");
             setupByToken();
         }
     }
