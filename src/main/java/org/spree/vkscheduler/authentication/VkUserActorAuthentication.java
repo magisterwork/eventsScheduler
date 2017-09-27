@@ -41,7 +41,7 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
     }
 
     private void setupActor(String code) {
-        if (configs.getString(TOKEN) == null || configs.getInt(USER_ID) == null) {
+        if (configs.getString(TOKEN) == null || configs.getString(TOKEN).isEmpty() || configs.getInt(USER_ID) == null) {
             UserAuthResponse authResponse = getUserAuthResponse(code);
             LOG.info("got authResponse: " + authResponse);
             actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
