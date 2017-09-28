@@ -8,6 +8,7 @@ import com.vk.api.sdk.objects.UserAuthResponse;
 import org.spree.core.parameter.ConfigStorage;
 import org.spree.vkscheduler.exception.VkAuthenticationException;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 import static org.spree.vkscheduler.parameter.VkParameterName.*;
@@ -41,16 +42,34 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
     }
 
     private void setupActor(String code) {
-        if (configs.getString(TOKEN) == null || configs.getString(TOKEN).isEmpty() || configs.getInt(USER_ID) == null) {
-            UserAuthResponse authResponse = getUserAuthResponse(code);
-            LOG.info("got authResponse: " + authResponse);
-            actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
-            configs.save(TOKEN, authResponse.getAccessToken());
-            configs.save(USER_ID, authResponse.getUserId());
+        if (tokenNotExist() || tokenExpired()) {
+            setupNewToken(code);
         } else {
             LOG.info("token exist. create user by token");
             setupByToken();
         }
+    }
+
+    private void setupNewToken(String code) {
+        UserAuthResponse authResponse = getUserAuthResponse(code);
+        LOG.info("got authResponse: " + authResponse);
+        actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
+        saveParameters(authResponse);
+    }
+
+    private boolean tokenNotExist() {
+        return configs.getString(TOKEN) == null || configs.getString(TOKEN).isEmpty() || configs.getInt(USER_ID) == null;
+    }
+
+    private boolean tokenExpired() {
+        return new Date().getTime() - configs.getInt(TOKEN_LIFETIME) > configs.getDate(TOKEN_CREATION_TIME).getTime();
+    }
+
+    private void saveParameters(UserAuthResponse authResponse) {
+        configs.save(TOKEN_CREATION_TIME, new Date());
+        configs.save(TOKEN_LIFETIME, authResponse.getExpiresIn());
+        configs.save(TOKEN, authResponse.getAccessToken());
+        configs.save(USER_ID, authResponse.getUserId());
     }
 
     private void setupByToken() {
