@@ -42,12 +42,7 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
     }
 
     private void setupActor(String code) {
-        if (tokenNotExist() || tokenExpired()) {
-            setupNewToken(code);
-        } else {
-            LOG.info("token exist. create user by token");
-            setupByToken();
-        }
+        setupNewToken(code);
     }
 
     private void setupNewToken(String code) {
@@ -55,14 +50,6 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
         LOG.info("got authResponse: " + authResponse);
         actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
         saveParameters(authResponse);
-    }
-
-    private boolean tokenNotExist() {
-        return configs.getString(TOKEN) == null || configs.getString(TOKEN).isEmpty() || configs.getInt(USER_ID) == null;
-    }
-
-    private boolean tokenExpired() {
-        return new Date().getTime() - configs.getInt(TOKEN_LIFETIME) > configs.getDate(TOKEN_CREATION_TIME).getTime();
     }
 
     private void saveParameters(UserAuthResponse authResponse) {
