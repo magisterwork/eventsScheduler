@@ -16,7 +16,7 @@ public class EventScheduler {
         this.jdbc = jdbc;
     }
 
-    /*@Scheduled(fixedDelay = 30000)*/
+    @Scheduled(fixedDelay = 60000)
     public void load() {
         for (Event event : source.getNew()) {
             new JdbcEvent(jdbc, event).save();
