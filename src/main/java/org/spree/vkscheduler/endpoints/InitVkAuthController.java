@@ -18,6 +18,7 @@ public class InitVkAuthController {
 
     @RequestMapping("/init")
     public String index(@RequestParam("code") String code) {
+        if (code == "123") return "success full";
         authentication.init(code);
         return "Success";
     }
