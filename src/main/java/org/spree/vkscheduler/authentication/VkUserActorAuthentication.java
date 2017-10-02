@@ -38,10 +38,6 @@ public class VkUserActorAuthentication implements VkAuthentication<UserActor> {
     @Override
     public void init(String code) {
         LOG.info("user initializing with code " + code);
-        setupActor(code);
-    }
-
-    private void setupActor(String code) {
         setupNewToken(code);
     }
 
