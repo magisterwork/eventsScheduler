@@ -9,7 +9,8 @@ import java.util.GregorianCalendar;
 public class VkEvent implements Event {
 
     private static final int MILLIS_IN_SECOND = 1000;
-    public static final String VK = "VK";
+    public static final String VK_SYSTEM_ID = "VK";
+    public static final int DEFAULT_DURATION = 3 * 60 * 60 * 1000;
 
     private GroupFull group;
 
@@ -42,7 +43,11 @@ public class VkEvent implements Event {
     @Override
     public Calendar getFinishDate() {
         GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(group.getFinishDate() * MILLIS_IN_SECOND);
+        calendar.setTimeInMillis(
+                group.getFinishDate() != null
+                        ? group.getFinishDate() * MILLIS_IN_SECOND
+                        : group.getStartDate() * MILLIS_IN_SECOND + DEFAULT_DURATION
+        );
         return calendar;
     }
 
@@ -58,6 +63,6 @@ public class VkEvent implements Event {
 
     @Override
     public String getSystemId() {
-        return null;
+        return VK_SYSTEM_ID;
     }
 }
