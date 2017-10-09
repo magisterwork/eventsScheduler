@@ -4,12 +4,13 @@ import com.google.gson.Gson;
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
+import org.spree.core.entities.JpaEvent;
 import org.spree.core.event.EventSource;
 import org.spree.core.parameter.ConfigStorage;
 import org.spree.vkscheduler.authentication.VkUserActorAuthentication;
 import org.spree.vkscheduler.eventsource.VkEventSource;
 import org.spree.vkscheduler.eventsource.searchfactory.SearchFactory;
-import org.spree.vkscheduler.eventsource.searchfactory.VologdaSearchFactory;
+import org.spree.vkscheduler.eventsource.searchfactory.VologdaRegionSearchFactory;
 import org.spree.vkscheduler.procedure.GetGroupsProcedure;
 import org.spree.vkscheduler.procedure.VkProcedure;
 import org.spree.vkscheduler.scheduling.EventScheduler;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
@@ -26,10 +28,12 @@ public class VkBeanContext {
     private ConfigStorage configStorage;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private CrudRepository<JpaEvent, JpaEvent.EventId> jpaEventCrudRepository;
 
     @Bean
     public EventScheduler eventScheduler() {
-        return new EventScheduler(vkEventSource());
+        return new EventScheduler(jpaEventCrudRepository, vkEventSource());
     }
 
     @Bean
@@ -55,7 +59,7 @@ public class VkBeanContext {
 
     @Bean
     public SearchFactory searchFactory() {
-        return new VologdaSearchFactory();
+        return new VologdaRegionSearchFactory();
     }
 
     @Bean
