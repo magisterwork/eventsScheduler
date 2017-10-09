@@ -19,11 +19,6 @@ public class VkEvent implements Event {
     }
 
     @Override
-    public Long getId() {
-        return null;
-    }
-
-    @Override
     public String getName() {
         return group.getName();
     }

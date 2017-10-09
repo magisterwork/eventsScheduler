@@ -3,12 +3,9 @@ package org.spree.vkscheduler.configuration;
 import com.google.gson.Gson;
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.Actor;
-import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.spree.core.event.EventSource;
 import org.spree.core.parameter.ConfigStorage;
-import org.spree.vkscheduler.authentication.VkAuthentication;
 import org.spree.vkscheduler.authentication.VkUserActorAuthentication;
 import org.spree.vkscheduler.eventsource.VkEventSource;
 import org.spree.vkscheduler.eventsource.searchfactory.SearchFactory;
@@ -20,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
@@ -33,7 +29,7 @@ public class VkBeanContext {
 
     @Bean
     public EventScheduler eventScheduler() {
-        return new EventScheduler(vkEventSource(), jdbcTemplate);
+        return new EventScheduler(vkEventSource());
     }
 
     @Bean
