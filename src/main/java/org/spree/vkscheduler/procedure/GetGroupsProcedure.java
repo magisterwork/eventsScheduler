@@ -8,6 +8,8 @@ import com.vk.api.sdk.queries.execute.ExecuteStorageFunctionQuery;
 import org.spree.vkscheduler.authentication.VkUserActorAuthentication;
 import org.spree.vkscheduler.exception.VkProcedureException;
 
+import java.util.logging.Logger;
+
 public class GetGroupsProcedure implements VkProcedure {
 
     public static final String STORAGE_FUNCTION_NAME = "getGroups";
