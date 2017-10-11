@@ -28,8 +28,6 @@ public class VkBeanContext {
     @Autowired
     private ConfigStorage configStorage;
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
     private CrudRepository<JpaEvent, JpaEvent.EventId> jpaEventCrudRepository;
 
     @Bean
