@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class VkEventSource implements EventSource<Event> {
@@ -33,9 +34,9 @@ public class VkEventSource implements EventSource<Event> {
     @Override
     public Collection<Event> getNew() {
         JsonElement response = groupsProcedure.execute(searchFactory.nextText());
-        ArrayList<GroupFull> groups = gson.fromJson(response, RESPONSE_TYPE);
+        List<GroupFull> groups = gson.fromJson(response, RESPONSE_TYPE);
         return groups.stream()
-                .map(item -> new VkEvent(item))
+                .map(VkEvent::new)
                 .collect(Collectors.toList());
     }
 }
