@@ -1,10 +1,12 @@
 package org.spree.vkscheduler.event;
 
 import com.vk.api.sdk.objects.groups.GroupFull;
+import org.spree.core.category.Category;
 import org.spree.core.event.Event;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
+
+import static java.util.Collections.emptyList;
 
 public class VkEvent implements Event {
 
@@ -59,5 +61,10 @@ public class VkEvent implements Event {
     @Override
     public String getSystemId() {
         return VK_SYSTEM_ID;
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return emptyList();
     }
 }

@@ -11,4 +11,12 @@ CREATE TABLE IF NOT EXISTS EVENTS (
   image_url   VARCHAR(128)
 );
 
-DROP TABLE EVENTS
+CREATE TABLE IF NOT EXISTS categories (
+  NAME VARCHAR(128) PRIMARY KEY
+)
+
+CREATE TABLE IF NOT EXISTS events_categories (
+  event_ext_id MEDIUMINT,
+  event_system_id VARCHAR(64),
+  categories_name VARCHAR(128)
+);
