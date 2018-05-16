@@ -10,7 +10,7 @@ import static java.util.Collections.emptyList;
 
 public class VkEvent implements Event {
 
-    private static final int MILLIS_IN_SECOND = 1000;
+    private static final long MILLIS_IN_SECOND = 1000L;
     public static final String VK_SYSTEM_ID = "VK";
     public static final int DEFAULT_DURATION = 3 * 60 * 60 * 1000;
 
@@ -61,6 +61,11 @@ public class VkEvent implements Event {
     @Override
     public String getSystemId() {
         return VK_SYSTEM_ID;
+    }
+
+    @Override
+    public int getMembersCount() {
+        return group.getMembersCount();
     }
 
     @Override
