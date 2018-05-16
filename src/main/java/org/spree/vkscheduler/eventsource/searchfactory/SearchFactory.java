@@ -1,6 +1,6 @@
 package org.spree.vkscheduler.eventsource.searchfactory;
 
-public interface SearchFactory {
+public interface SearchFactory<T> {
 
-    String nextText();
+    T nextRequest();
 }

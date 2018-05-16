@@ -8,9 +8,10 @@ import com.vk.api.sdk.queries.execute.ExecuteStorageFunctionQuery;
 import org.spree.vkscheduler.authentication.VkUserActorAuthentication;
 import org.spree.vkscheduler.exception.VkProcedureException;
 
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Map;
 
-public class GetGroupsProcedure implements VkProcedure {
+public class GetGroupsProcedure implements VkProcedure<GetGroupsProcedure.Query> {
 
     public static final String STORAGE_FUNCTION_NAME = "getGroups";
 
@@ -23,13 +24,29 @@ public class GetGroupsProcedure implements VkProcedure {
     }
 
     @Override
-    public JsonElement execute(String text) {
-        ExecuteStorageFunctionQuery query = client.execute().storageFunction(authentication.actor(), STORAGE_FUNCTION_NAME);
-        query.unsafeParam("text", text);;
+    public JsonElement execute(Query query) {
+        ExecuteStorageFunctionQuery storageQuery = client.execute().storageFunction(authentication.actor(), STORAGE_FUNCTION_NAME);
+        query.params().forEach(storageQuery::unsafeParam);
+
         try {
-            return query.execute();
+            return storageQuery.execute();
         } catch (ApiException | ClientException e) {
             throw new VkProcedureException(e);
+        }
+    }
+
+    public static class Query implements VkProcedure.Query {
+
+        private HashMap<String, Object> params = new HashMap<>();
+
+        public Query(String text, Integer cityId) {
+            params.put("text", text);
+            params.put("cityId", cityId);
+        }
+
+        @Override
+        public Map<String, Object> params() {
+            return params;
         }
     }
 }

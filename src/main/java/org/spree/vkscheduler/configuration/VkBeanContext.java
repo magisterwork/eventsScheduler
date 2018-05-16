@@ -14,6 +14,7 @@ import org.spree.vkscheduler.eventsource.searchfactory.VologdaRegionSearchFactor
 import org.spree.vkscheduler.procedure.GetGroupsProcedure;
 import org.spree.vkscheduler.procedure.LoggedProcedure;
 import org.spree.vkscheduler.procedure.VkProcedure;
+import org.spree.vkscheduler.procedure.VkSearchFactory;
 import org.spree.vkscheduler.scheduling.EventScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,12 +55,13 @@ public class VkBeanContext {
     @Qualifier("groupProcedure")
     public VkProcedure groupProcedure() {
         return new LoggedProcedure(
-                new GetGroupsProcedure(vkApiClient(), vkAuthentication())
+                new GetGroupsProcedure(vkApiClient(), vkAuthentication()
+                )
         );
     }
 
     @Bean
-    public SearchFactory searchFactory() {
+    public VkSearchFactory searchFactory() {
         return new VologdaRegionSearchFactory();
     }
 

@@ -15,9 +15,9 @@ public class LoggedProcedure implements VkProcedure {
     }
 
     @Override
-    public JsonElement execute(String text) {
-        LOG.fine("executing " + procedure.getClass() + "with text " + text);
-        JsonElement result = procedure.execute(text);
+    public JsonElement execute(Query query) {
+        LOG.fine("executing " + procedure.getClass() + "with query " + query);
+        JsonElement result = procedure.execute(query);
         LOG.fine("result" + result);
         return result;
     }
