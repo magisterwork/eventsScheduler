@@ -12,7 +12,8 @@ public class VologdaRegionSearchFactory implements VkSearchFactory {
 
     private final List<VkCity> cities = Arrays.asList(
             new VkCity(41, "Вологда"),
-            new VkCity(8, "Череповец")
+            new VkCity(8, "Череповец"),
+            new VkCity(5667, "Кириллов")
     );
     private Iterator<VkCity> iterator = cities.iterator();
     private int count = 50;
