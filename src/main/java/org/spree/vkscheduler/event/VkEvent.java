@@ -72,4 +72,14 @@ public class VkEvent implements Event {
     public List<Category> getCategories() {
         return emptyList();
     }
+
+    @Override
+    public double getLatitude() {
+        return group.getPlace() != null ? group.getPlace().getLatitude() : 0;
+    }
+
+    @Override
+    public double getLongitude() {
+        return group.getPlace() != null ? group.getPlace().getLatitude() : 0;
+    }
 }
