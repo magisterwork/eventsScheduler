@@ -20,3 +20,5 @@ CREATE TABLE IF NOT EXISTS events_categories (
   event_system_id VARCHAR(64),
   categories_name VARCHAR(128)
 );
+
+docker run --name mysql --net=eventsnet -e MYSQL_ROOT_PASSWORD=rootPassword mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
