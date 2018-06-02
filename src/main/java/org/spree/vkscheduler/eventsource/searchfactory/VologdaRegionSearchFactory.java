@@ -1,14 +1,10 @@
 package org.spree.vkscheduler.eventsource.searchfactory;
 
-import org.spree.vkscheduler.procedure.GetGroupsProcedure;
-import org.spree.vkscheduler.procedure.VkProcedure;
-import org.spree.vkscheduler.procedure.VkSearchFactory;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class VologdaRegionSearchFactory implements VkSearchFactory {
+public class VologdaRegionSearchFactory implements SearchFactory<VologdaRegionSearchFactory.VkCity> {
 
     private final List<VkCity> cities = Arrays.asList(
             new VkCity(41, "Вологда"),
@@ -19,15 +15,14 @@ public class VologdaRegionSearchFactory implements VkSearchFactory {
     private int count = 50;
 
     @Override
-    public VkProcedure.Query nextRequest() {
+    public VkCity nextRequest() {
         if (!iterator.hasNext()) {
             iterator = cities.iterator();
         }
-        VkCity city = iterator.next();
-        return new GetGroupsProcedure.Query(city.name, city.id);
+        return iterator.next();
     }
 
-    private class VkCity {
+    public class VkCity {
         VkCity(int id, String name) {
             this.id = id;
             this.name = name;

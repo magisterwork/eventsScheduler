@@ -9,8 +9,8 @@ import org.spree.core.event.EventSource;
 import org.spree.core.parameter.ConfigStorage;
 import org.spree.vkscheduler.authentication.VkUserActorAuthentication;
 import org.spree.vkscheduler.eventsource.VkEventSource;
-import org.spree.vkscheduler.eventsource.searchfactory.SearchFactory;
 import org.spree.vkscheduler.eventsource.searchfactory.VologdaRegionSearchFactory;
+import org.spree.vkscheduler.eventsource.searchfactory.WithNumbersVkSearchFactory;
 import org.spree.vkscheduler.procedure.GetGroupsProcedure;
 import org.spree.vkscheduler.procedure.LoggedProcedure;
 import org.spree.vkscheduler.procedure.VkProcedure;
@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class VkBeanContext {
@@ -62,7 +61,7 @@ public class VkBeanContext {
 
     @Bean
     public VkSearchFactory searchFactory() {
-        return new VologdaRegionSearchFactory();
+        return new WithNumbersVkSearchFactory(new VologdaRegionSearchFactory());
     }
 
     @Bean

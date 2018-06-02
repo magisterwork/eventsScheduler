@@ -33,7 +33,9 @@ public class VkEvent implements Event {
     @Override
     public Calendar getStartDate() {
         GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(group.getStartDate() * MILLIS_IN_SECOND);
+        calendar.setTimeInMillis(group.getStartDate() != null
+                ? group.getStartDate() * MILLIS_IN_SECOND
+                : 0);
         return calendar;
     }
 
