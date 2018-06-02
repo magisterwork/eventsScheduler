@@ -5,7 +5,9 @@ import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.spree.core.entities.JpaEvent;
+import org.spree.core.event.Event;
 import org.spree.core.event.EventSource;
+import org.spree.core.event.NotEmptyDescriptionEventSource;
 import org.spree.core.parameter.ConfigStorage;
 import org.spree.vkscheduler.authentication.VkUserActorAuthentication;
 import org.spree.vkscheduler.eventsource.VkEventSource;
@@ -47,7 +49,9 @@ public class VkBeanContext {
 
     @Bean
     public EventSource vkEventSource() {
-        return new VkEventSource(groupProcedure(), searchFactory(), gson());
+        return new NotEmptyDescriptionEventSource<>(
+                new VkEventSource(groupProcedure(), searchFactory(), gson())
+        );
     }
 
     @Bean
