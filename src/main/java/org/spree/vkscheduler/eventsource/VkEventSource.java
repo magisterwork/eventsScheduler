@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.vk.api.sdk.objects.groups.GroupFull;
+import com.vk.api.sdk.objects.groups.GroupIsClosed;
 import org.spree.core.event.Event;
 import org.spree.core.event.EventSource;
 import org.spree.vkscheduler.event.VkEvent;
@@ -15,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class VkEventSource implements EventSource<Event> {
@@ -38,6 +40,8 @@ public class VkEventSource implements EventSource<Event> {
         List<GroupFull> groups = getGroups(query);
 
         return groups.stream()
+                .filter(groupFull -> groupFull.getIsClosed() != null
+                        && groupFull.getIsClosed() == GroupIsClosed.OPEN)
                 .map(VkEvent::new)
                 .collect(Collectors.toList());
     }

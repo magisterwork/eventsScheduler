@@ -41,7 +41,7 @@ public class GetGroupsProcedure implements VkProcedure<GetGroupsProcedure.Query>
 
         public Query(String text, Integer cityId) {
             params.put("text", text);
-            params.put("cityId", cityId);
+            /*params.put("cityId", cityId);*/
         }
 
         @Override
